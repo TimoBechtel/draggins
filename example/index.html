@@ -48,19 +48,21 @@
     </section>
     <script type="module">
       import { draggable } from './dist/index.module.js';
-      const border = document.getElementById('border');
-      const x1 = border.offsetLeft;
-      const x2 = border.offsetLeft + border.offsetWidth;
-      const y1 = border.offsetTop;
-      const y2 = border.offsetTop + border.offsetHeight;
-      const dragApi = draggable('.draggable', {
-        limit: { x: { min: x1, max: x2 }, y: { min: y1, max: y2 } },
-        onDragStart: (position) => console.log(position),
-        onDragEnd: (position) => console.log(position),
-        cancelWhenOutOfBoundary: false,
-      });
-      document.getElementById('toggle').addEventListener('click', (e) => {
-        dragApi.setDraggableState(e.target.checked);
+      window.addEventListener('load', () => {
+        const border = document.getElementById('border');
+        const x1 = border.offsetLeft;
+        const x2 = border.offsetLeft + border.offsetWidth;
+        const y1 = border.offsetTop;
+        const y2 = border.offsetTop + border.offsetHeight;
+        const dragApi = draggable('.draggable', {
+          limit: { x: { min: x1, max: x2 }, y: { min: y1, max: y2 } },
+          onDragStart: (position) => console.log(position),
+          onDragEnd: (position) => console.log(position),
+          cancelWhenOutOfBoundary: false,
+        });
+        document.getElementById('toggle').addEventListener('click', (e) => {
+          dragApi.setDraggableState(e.target.checked);
+        });
       });
     </script>
   </body>
