@@ -1,0 +1,49 @@
+{
+  "name": "draggins",
+  "version": "0.0.1",
+  "description": "Make things draggable on mobile or desktop.",
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "build": "microbundle && npm run build:example",
+    "build:example": "microbundle build -f es -o example/dist/index.js",
+    "dev": "microbundle watch",
+    "dev:example": "microbundle watch -f es -o example/dist/index.js",
+    "prepare": "npm run build",
+    "lint": "eslint src",
+    "test": "npm run lint"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimoBechtel/draggins.git"
+  },
+  "keywords": [
+    "draggable",
+    "drag",
+    "web",
+    "javascript"
+  ],
+  "author": "Timo Bechtel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TimoBechtel/draggins/issues"
+  },
+  "homepage": "https://github.com/TimoBechtel/draggins#readme",
+  "devDependencies": {
+    "@compactjs/uea": "^1.0.0",
+    "@semantic-release/changelog": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "eslint": "^6.8.0",
+    "install": "^0.13.0",
+    "microbundle": "^0.12.0-next.8",
+    "npm": "^6.14.4",
+    "semantic-release": "^17.0.4"
+  }
+}

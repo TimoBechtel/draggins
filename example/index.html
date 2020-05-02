@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    <title>draggins</title>
+  </head>
+  <body>
+    <style>
+      .draggable {
+        width: 100px;
+        height: 100px;
+        background-color: teal;
+        border-radius: 7px;
+        padding: 10px;
+        box-sizing: border-box;
+        color: white;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+      }
+      .draggable:first-child {
+        background-color: steelblue;
+      }
+      #border {
+        position: absolute;
+        border: 1px dotted grey;
+        width: 70vw;
+        height: 30vh;
+      }
+    </style>
+    <header>
+      <h1>draggins</h1>
+      <p>Make things draggable.</p>
+      <a href="https://github.com/TimoBechtel/draggable">Github</a>
+    </header>
+    <section>
+      <input type="checkbox" id="toggle" checked />
+      <label for="toggle">Toggle</label>
+    </section>
+    <section>
+      <div class="draggable">
+        Hi, I'm draggable
+      </div>
+      <div class="draggable">
+        Me too!
+      </div>
+      <div id="border"></div>
+    </section>
+    <script type="module">
+      import { draggable } from './dist/index.module.js';
+      const border = document.getElementById('border');
+      const x1 = border.offsetLeft;
+      const x2 = border.offsetLeft + border.offsetWidth;
+      const y1 = border.offsetTop;
+      const y2 = border.offsetTop + border.offsetHeight;
+      const dragApi = draggable('.draggable', {
+        limit: { x: { min: x1, max: x2 }, y: { min: y1, max: y2 } },
+        onDragStart: (position) => console.log(position),
+        onDragEnd: (position) => console.log(position),
+        cancelWhenOutOfBoundary: false,
+      });
+      document.getElementById('toggle').addEventListener('click', (e) => {
+        dragApi.setDraggableState(e.target.checked);
+      });
+    </script>
+  </body>
+</html>
