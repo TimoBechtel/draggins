@@ -46,13 +46,13 @@ npm install draggins
 ### As module:
 
 ```javascript
-import { draggins } from 'draggins';
+import { draggable } from 'draggins';
 ```
 
 Then:
 
 ```javascript
-draggins('.draggable');
+draggable('.draggable');
 ```
 
 ### More examples:
