@@ -25,6 +25,16 @@ interface DraggableOptions {
    * @default false
    */
   dontTouchStyles: boolean;
+
+  /**
+   * Run when dragging has started
+   */
+  onDragStart: (position: { x: number; y: number }) => void;
+
+  /**
+   * Run when dragging has ended
+   */
+  onDragEnd: (position: { x: number; y: number }) => void;
 }
 
 /**

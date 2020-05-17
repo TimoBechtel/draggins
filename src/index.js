@@ -21,8 +21,8 @@ export const draggable = (
     },
     cancelWhenOutOfBoundary = false,
     dontTouchStyles = false,
-    onDragStart,
-    onDragEnd,
+    onDragStart = () => {},
+    onDragEnd = () => {},
   } = {}
 ) => {
   const elements = accept(element);
