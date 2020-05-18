@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/TimoBechtel/draggins/compare/v1.0.1...v2.0.0) (2020-05-18)
+
+
+### Features
+
+* switch from absolute positioning to relative transforms ([5f20093](https://github.com/TimoBechtel/draggins/commit/5f2009380113048a2f4d5e172bb8be25585d6390))
+
+
+### BREAKING CHANGES
+
+* it now overrides css transform values
+
 ## [1.0.1](https://github.com/TimoBechtel/draggins/compare/v1.0.0...v1.0.1) (2020-05-17)
 
 
