@@ -21,7 +21,7 @@ interface DraggableOptions {
    */
   cancelWhenOutOfBoundary: boolean;
   /**
-   * draggins by default changes styles to absolute
+   * draggins by default changes z-index to 99
    * @default false
    */
   dontTouchStyles: boolean;

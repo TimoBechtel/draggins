@@ -28,16 +28,26 @@ export const draggable = (
   const elements = accept(element);
   let draggable = true;
   elements.forEach((element) => {
-    if (!dontTouchStyles) initStyles(element, getDimensions(element));
+    if (!dontTouchStyles) initStyles(element);
+    const translate = { x: 0, y: 0 };
     element.addEventListener(startEvent, (e) => {
       const event = /touch/.test(e.type) ? e.targetTouches[0] : e;
       const dimensions = getDimensions(element);
-      const mouseStartPosition = {
+
+      const initialMousePosition = {
         x: event.clientX,
         y: event.clientY,
       };
-      onDragStart({ x: dimensions.left, y: dimensions.top });
+      const initialTranslate = { ...translate };
+      onDragStart({
+        x: dimensions.left + translate.x,
+        y: dimensions.top + translate.y,
+      });
       e.preventDefault();
+
+      document.addEventListener(moveEvent, onMouseMove);
+      document.addEventListener(endEvent, onMouseUp);
+
       function onMouseMove(e) {
         if (!draggable) return;
         const event = /touch/.test(e.type) ? e.targetTouches[0] : e;
@@ -49,32 +59,34 @@ export const draggable = (
           return;
         }
         const mouseMoveDistance = {
-          x: event.clientX - mouseStartPosition.x,
-          y: event.clientY - mouseStartPosition.y,
+          x: event.clientX - initialMousePosition.x,
+          y: event.clientY - initialMousePosition.y,
         };
-        let newElementTop = dimensions.top + mouseMoveDistance.y;
-        if (limit)
-          newElementTop = limitValue(
-            newElementTop,
-            limit.y.min,
-            limit.y.max - dimensions.height
+        translate.x = initialTranslate.x + mouseMoveDistance.x;
+        translate.y = initialTranslate.y + mouseMoveDistance.y;
+
+        if (limit) {
+          translate.x = limitValue(
+            translate.x,
+            limit.x.min - dimensions.left,
+            limit.x.max - dimensions.width - dimensions.left
           );
-        let newElementLeft = dimensions.left + mouseMoveDistance.x;
-        if (limit)
-          newElementLeft = limitValue(
-            newElementLeft,
-            limit.x.min,
-            limit.x.max - dimensions.width
+          translate.y = limitValue(
+            translate.y,
+            limit.y.min - dimensions.top,
+            limit.y.max - dimensions.height - dimensions.top
           );
-        element.style.top = `${newElementTop}px`;
-        element.style.left = `${newElementLeft}px`;
+        }
+
+        element.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
       }
       function onMouseUp() {
-        onDragEnd({ x: dimensions.left, y: dimensions.top });
+        onDragEnd({
+          x: dimensions.left + translate.x,
+          y: dimensions.top + translate.y,
+        });
         removeListener(onMouseMove, onMouseUp);
       }
-      document.addEventListener(moveEvent, onMouseMove);
-      document.addEventListener(endEvent, onMouseUp);
     });
   });
   return {
@@ -84,12 +96,7 @@ export const draggable = (
   };
 };
 
-const initStyles = (element, { top, left, width, height }) => {
-  element.style.top = `${top}px`;
-  element.style.left = `${left}px`;
-  element.style.width = `${width}px`;
-  element.style.height = `${height}px`;
-  element.style.position = 'absolute';
+const initStyles = (element) => {
   element.style.zIndex = 99;
 };
 
