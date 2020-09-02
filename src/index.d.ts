@@ -14,27 +14,27 @@ interface DraggableOptions {
    * set it to 'null' to disable
    * defaults to window width/height
    */
-  limit: { x: { min: number; max: number }; y: { min: number; max: number } };
+  limit?: { x: { min: number; max: number }; y: { min: number; max: number } };
   /**
    * stop dragging when mouse is out of boundaries
    * @default false
    */
-  cancelWhenOutOfBoundary: boolean;
+  cancelWhenOutOfBoundary?: boolean;
   /**
    * draggins by default changes z-index to 99
    * @default false
    */
-  dontTouchStyles: boolean;
+  dontTouchStyles?: boolean;
 
   /**
    * Run when dragging has started
    */
-  onDragStart: (position: { x: number; y: number }) => void;
+  onDragStart?: (position: { x: number; y: number }) => void;
 
   /**
    * Run when dragging has ended
    */
-  onDragEnd: (position: { x: number; y: number }) => void;
+  onDragEnd?: (position: { x: number; y: number }) => void;
 }
 
 /**
@@ -45,5 +45,5 @@ interface DraggableOptions {
  */
 export function draggable(
   element: string | HTMLElement | HTMLElement[] | HTMLCollection | NodeList,
-  options: DraggableOptions
+  options?: DraggableOptions
 ): DraggableAPI;
