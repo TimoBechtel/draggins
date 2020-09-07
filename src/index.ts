@@ -1,4 +1,5 @@
 import { accept, UniversalElementSelector } from '@compactjs/uea';
+import { cap } from '@compactjs/cap';
 
 const isTouch = 'ontouchstart' in window;
 const startEvent = isTouch ? 'touchstart' : 'mousedown';
@@ -68,12 +69,12 @@ export const draggable = (
         translate.y = initialTranslate.y + mouseMoveDistance.y;
 
         if (limit) {
-          translate.x = limitValue(
+          translate.x = cap(
             translate.x,
             limit.x.min - dimensions.left,
             limit.x.max - dimensions.width - dimensions.left
           );
-          translate.y = limitValue(
+          translate.y = cap(
             translate.y,
             limit.y.min - dimensions.top,
             limit.y.max - dimensions.height - dimensions.top
@@ -110,9 +111,6 @@ const getDimensions = (element: HTMLElement) => ({
 const initStyles = (element: HTMLElement) => {
   element.style.zIndex = '99';
 };
-
-const limitValue = (value: number, from: number, to: number) =>
-  Math.min(Math.max(value, from), to);
 
 const isOutOfBoundary = (x: number, y: number, limit: Limit) =>
   !limit ||
