@@ -55,6 +55,17 @@ Then:
 draggable('.draggable');
 ```
 
+You can use it easily with [Svelte](https://svelte.dev/):
+
+```html
+<script>
+  import { draggable } from 'draggins';
+  // discard return value as svelte expects its own api:
+  const isDraggable = (el) => void draggable(el);
+</script>
+<div use:isDraggable>I'm draggable</div>
+```
+
 ### More examples:
 
 ```javascript
@@ -78,7 +89,7 @@ Docs:
  */
 function draggable(
   element: string | HTMLElement | HTMLElement[] | HTMLCollection | NodeList,
-  options: DraggableOptions
+  options?: DraggableOptions
 ): DraggableAPI;
 
 interface DraggableAPI {
@@ -95,17 +106,27 @@ interface DraggableOptions {
    * set it to 'null' to disable
    * defaults to window width/height
    */
-  limit: { x: { min: number; max: number }; y: { min: number; max: number } };
+  limit?: { x: { min: number; max: number }; y: { min: number; max: number } };
   /**
    * stop dragging when mouse is out of boundaries
    * @default false
    */
-  cancelWhenOutOfBoundary: boolean;
+  cancelWhenOutOfBoundary?: boolean;
   /**
-   * draggins by default changes styles to absolute
+   * draggins by default changes z-index to 99
    * @default false
    */
-  dontTouchStyles: boolean;
+  dontTouchStyles?: boolean;
+
+  /**
+   * Run when dragging has started
+   */
+  onDragStart?: (position: { x: number; y: number }) => void;
+
+  /**
+   * Run when dragging has ended
+   */
+  onDragEnd?: (position: { x: number; y: number }) => void;
 }
 ```
 
