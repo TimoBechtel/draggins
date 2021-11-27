@@ -12,9 +12,7 @@
     "build:example": "microbundle build -f es -o example/dist/index.js",
     "dev": "microbundle watch",
     "dev:example": "microbundle watch -f es -o example/dist/index.js",
-    "prepare": "npm run build",
-    "lint": "eslint src",
-    "test": "npm run lint"
+    "prepare": "npm run build"
   },
   "files": [
     "src",
@@ -41,9 +39,6 @@
     "@compactjs/uea": "^1.0.3",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.1.0",
-    "@typescript-eslint/parser": "^4.1.0",
-    "eslint": "^7.8.1",
     "microbundle": "^0.12.3",
     "semantic-release": "^17.1.1"
   }
