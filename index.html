@@ -17,6 +17,7 @@
         box-sizing: border-box;
         color: white;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        cursor: move;
       }
       .draggable:first-child {
         background-color: steelblue;
@@ -38,12 +39,8 @@
       <label for="toggle">Toggle</label>
     </section>
     <section>
-      <div class="draggable">
-        Hi, I'm draggable
-      </div>
-      <div class="draggable">
-        Me too!
-      </div>
+      <div class="draggable">Hi, I'm draggable</div>
+      <div class="draggable">Me too!</div>
       <div id="border"></div>
     </section>
     <script type="module">
@@ -56,8 +53,14 @@
         const y2 = border.offsetTop + border.offsetHeight;
         const dragApi = draggable('.draggable', {
           limit: { x: { min: x1, max: x2 }, y: { min: y1, max: y2 } },
-          onDragStart: (position) => console.log(position),
-          onDragEnd: (position) => console.log(position),
+          onDragStart: (position, e) => {
+            console.log(position);
+            e.style.cursor = 'grab';
+          },
+          onDragEnd: (position, e) => {
+            console.log(position);
+            e.style.cursor = 'move';
+          },
           cancelWhenOutOfBoundary: false,
         });
         document.getElementById('toggle').addEventListener('click', (e) => {
