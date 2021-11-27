@@ -1,5 +1,5 @@
 import { cap } from '@compactjs/cap';
-import { accept, UniversalElementSelector } from '@compactjs/uea';
+import { select, UniversalElementSelector } from '@compactjs/uea';
 
 const isTouch = 'ontouchstart' in window;
 const startEvent = isTouch ? 'touchstart' : 'mousedown';
@@ -21,7 +21,7 @@ export const draggable = (
     stopPropagation = true,
   }: DraggableOptions = {}
 ): DraggableAPI => {
-  const elements = accept(element);
+  const elements = select(element);
   let draggable = true;
 
   elements.forEach((element) => {
