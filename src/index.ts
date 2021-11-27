@@ -1,7 +1,8 @@
 import { cap } from '@compactjs/cap';
 import { select, UniversalElementSelector } from '@compactjs/uea';
 
-const isTouch = 'ontouchstart' in window;
+// check if window s available, to support SSR
+const isTouch = typeof window !== 'undefined' && 'ontouchstart' in window;
 const startEvent = isTouch ? 'touchstart' : 'mousedown';
 const moveEvent = isTouch ? 'touchmove' : 'mousemove';
 const endEvent = isTouch ? 'touchend' : 'mouseup';
