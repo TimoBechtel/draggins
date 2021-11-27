@@ -45,10 +45,13 @@ export const draggable = (
       };
       const initialTranslate = { ...translate };
       if (onDragStart)
-        onDragStart({
-          x: dimensions.left + translate.x,
-          y: dimensions.top + translate.y,
-        });
+        onDragStart(
+          {
+            x: dimensions.left + translate.x,
+            y: dimensions.top + translate.y,
+          },
+          element
+        );
 
       document.addEventListener(moveEvent, onMouseMove);
       document.addEventListener(endEvent, onMouseUp);
@@ -92,10 +95,13 @@ export const draggable = (
 
       function onMouseUp() {
         if (onDragEnd)
-          onDragEnd({
-            x: dimensions.left + translate.x,
-            y: dimensions.top + translate.y,
-          });
+          onDragEnd(
+            {
+              x: dimensions.left + translate.x,
+              y: dimensions.top + translate.y,
+            },
+            element
+          );
         removeListener(onMouseMove, onMouseUp);
       }
     });
@@ -172,12 +178,15 @@ export type DraggableOptions = {
   /**
    * Run when dragging has started
    */
-  onDragStart?: (position: { x: number; y: number }) => void;
+  onDragStart?: (
+    position: { x: number; y: number },
+    target: HTMLElement
+  ) => void;
 
   /**
    * Run when dragging has ended
    */
-  onDragEnd?: (position: { x: number; y: number }) => void;
+  onDragEnd?: (position: { x: number; y: number }, target: HTMLElement) => void;
 };
 
 export type DraggableAPI = {
