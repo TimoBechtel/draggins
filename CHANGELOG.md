@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/TimoBechtel/draggins/compare/v2.0.1...v2.1.0) (2021-11-27)
+
+
+### Features
+
+* add options for preventing default behaviour ([f5648b3](https://github.com/TimoBechtel/draggins/commit/f5648b3a9aa4a5ec7466c78b39266038e5a5a953))
+* make it easier to import in ssr mode ([ad42590](https://github.com/TimoBechtel/draggins/commit/ad42590a68fc8c19d28ae2a44320ca69900f697d))
+* pass html element to callback functions ([5b6d941](https://github.com/TimoBechtel/draggins/commit/5b6d9417b1ffd9b566fd33bd87582348b346194a))
+
 ## [2.0.1](https://github.com/TimoBechtel/draggins/compare/v2.0.0...v2.0.1) (2020-09-07)
 
 
