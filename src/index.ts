@@ -1,5 +1,5 @@
-import { accept, UniversalElementSelector } from '@compactjs/uea';
 import { cap } from '@compactjs/cap';
+import { accept, UniversalElementSelector } from '@compactjs/uea';
 
 const isTouch = 'ontouchstart' in window;
 const startEvent = isTouch ? 'touchstart' : 'mousedown';
@@ -17,6 +17,8 @@ export const draggable = (
     dontTouchStyles = false,
     onDragStart = null,
     onDragEnd = null,
+    preventDefault = true,
+    stopPropagation = true,
   }: DraggableOptions = {}
 ): DraggableAPI => {
   const elements = accept(element);
@@ -28,6 +30,9 @@ export const draggable = (
     if (!dontTouchStyles) initStyles(element);
 
     element.addEventListener(startEvent, (e: MouseEvent | TouchEvent) => {
+      if (preventDefault) e.preventDefault();
+      if (stopPropagation) e.stopPropagation();
+
       const event: MouseEvent | Touch = /touch/.test(e.type)
         ? (e as TouchEvent).targetTouches[0]
         : (e as MouseEvent);
@@ -44,12 +49,13 @@ export const draggable = (
           x: dimensions.left + translate.x,
           y: dimensions.top + translate.y,
         });
-      e.preventDefault();
 
       document.addEventListener(moveEvent, onMouseMove);
       document.addEventListener(endEvent, onMouseUp);
 
       function onMouseMove(e: MouseEvent | TouchEvent) {
+        if (preventDefault) e.preventDefault();
+        if (stopPropagation) e.stopPropagation();
         if (!draggable) return;
         const event: MouseEvent | Touch = /touch/.test(e.type)
           ? (e as TouchEvent).targetTouches[0]
@@ -120,8 +126,8 @@ const isOutOfBoundary = (x: number, y: number, limit: Limit) =>
   y >= limit.y.max;
 
 const removeListener = (
-  onMouseMove: EventListener,
-  onMouseUp: EventListener
+  onMouseMove: (e: MouseEvent | TouchEvent) => void,
+  onMouseUp: (e: MouseEvent | TouchEvent) => void
 ) => {
   document.removeEventListener(moveEvent, onMouseMove);
   document.removeEventListener(endEvent, onMouseUp);
@@ -151,6 +157,17 @@ export type DraggableOptions = {
    * @default false
    */
   dontTouchStyles?: boolean;
+
+  /**
+   * prevents default behavior of dragging
+   * @default true
+   */
+  preventDefault?: boolean;
+  /**
+   * stops event propagation
+   * @default true
+   */
+  stopPropagation?: boolean;
 
   /**
    * Run when dragging has started
